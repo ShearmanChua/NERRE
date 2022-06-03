@@ -7,7 +7,7 @@ from starlette.status import HTTP_503_SERVICE_UNAVAILABLE
 import subprocess
 import json
 import requests
-from inference import do_everything
+from inference import do_everything, generate_ner_query_output
 
 lock = Lock()
 app = FastAPI()
@@ -19,6 +19,9 @@ async def ner(request: Request):
     # TODO
     # Add pydantic check here
 
-    json_response = do_everything(context)
+    linked_entities, relations = do_everything(context)
+    json_response = generate_ner_query_output(linked_entities)
+
+    # json_response = do_everything(context)
     
     return json_response

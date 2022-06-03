@@ -4,7 +4,7 @@ services:
     build: ./
     stdin_open: true
     tty: true
-    command: ["/bin/bash","uvicorn api_service:app --host 0.0.0.0 --port 4000 --reload"]
+    command: uvicorn api_service:app --host 0.0.0.0 --port 4000 --reload
     environment:
       NVIDIA_VISIBLE_DEVICES: 0
       CUDA_VISIBLE_DEVICES: 0
@@ -13,6 +13,8 @@ services:
     shm_size: '16gb'
     volumes:
       - .:/opennre
+    ports:
+      - 4000:4000
     networks:
       - backend
 
@@ -34,6 +36,27 @@ services:
       - discovery.type=single-node
     # ports:
     #   - 9201:9200
+    networks:
+        - backend
+
+  neo4j:
+    # runtime: nvidia
+    build: ./neo4j/
+    stdin_open: true
+    tty: true
+    environment:
+      - NEO4J_AUTH=${NEO4J_PASSWORD}
+    volumes:
+      - ./neo4j/src:/src
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/import:/var/lib/neo4j/import
+    ports:
+      - 7687:7687
+      - 7474:7474
+    ulimits:
+      memlock: -1 # set upper limit for how much memory is locked for the container (-1 means lock as much as the container uses)
+    shm_size: 32gb # set upper limit for how much shared memory container can use
     networks:
         - backend
 
