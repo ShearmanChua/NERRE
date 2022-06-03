@@ -23,8 +23,8 @@ def download_wiki80(root_path=default_root_path):
     if not os.path.exists(os.path.join(root_path, 'benchmark/wiki80')):
         os.mkdir(os.path.join(root_path, 'benchmark/wiki80'))
         os.system('wget -P ' + os.path.join(root_path, 'benchmark/wiki80') + ' ' + root_url + 'opennre/benchmark/wiki80/wiki80_rel2id.json')
-        os.system('wget -P ' + os.path.join(root_path, 'benchmark/wiki80') + ' ' + root_url + 'opennre/benchmark/wiki80/wiki80_train.txt')
-        os.system('wget -P ' + os.path.join(root_path, 'benchmark/wiki80') + ' ' + root_url + 'opennre/benchmark/wiki80/wiki80_val.txt')
+        # os.system('wget -P ' + os.path.join(root_path, 'benchmark/wiki80') + ' ' + root_url + 'opennre/benchmark/wiki80/wiki80_train.txt')
+        # os.system('wget -P ' + os.path.join(root_path, 'benchmark/wiki80') + ' ' + root_url + 'opennre/benchmark/wiki80/wiki80_val.txt')
 
 def download_tacred(root_path=default_root_path):
     check_root()

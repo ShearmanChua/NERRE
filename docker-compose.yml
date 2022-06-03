@@ -13,3 +13,33 @@ services:
     shm_size: '16gb'
     volumes:
       - .:/opennre
+    networks:
+      - backend
+
+  entitylinking:
+    build:
+      context: /home/daniel/projects/entity-linking/entitylinking/app
+      dockerfile: Dockerfile
+    command: /opt/conda/envs/aida_coreference/bin/uvicorn api_service:app --host 0.0.0.0 --port 5000 --reload
+    volumes:
+      - /home/daniel/projects/entity-linking/entitylinking/app:/app
+    ports:
+      - 5000:5000
+    networks:
+      - backend
+
+  entitylinking_elasticsearch:
+    image: laituan245/wikidata-es
+    environment:
+      - discovery.type=single-node
+    # ports:
+    #   - 9201:9200
+    networks:
+        - backend
+
+volumes:
+  storage:
+    driver: local
+
+networks:  
+  backend: 
