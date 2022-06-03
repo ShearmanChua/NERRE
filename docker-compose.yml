@@ -1,0 +1,15 @@
+version: '3'
+services:
+  opennre:
+    build: ./
+    stdin_open: true
+    tty: true
+    command: "/bin/bash"
+    environment:
+      NVIDIA_VISIBLE_DEVICES: 0
+      CUDA_VISIBLE_DEVICES: 0
+    ulimits:
+      memlock: -1
+    shm_size: '16gb'
+    volumes:
+      - .:/opennre
